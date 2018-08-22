@@ -89,7 +89,7 @@ https://www.ratehub.ca/banks/bank-mortgage-rates loaded and parsed in real-time
 
  * https://scotch.io/tutorials/scraping-the-web-with-node-js
  * https://medium.com/@designman/building-a-performant-web-scraper-in-node-js-5f4449674163
- * 
+ * https://www.npmjs.com/package/website-scraper
 
 ## Acceptance Criteria
 
