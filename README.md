@@ -81,12 +81,18 @@ GET /Canadian%20Lender
 }
 ```
 
+## Source Data
+
+https://www.ratehub.ca/banks/bank-mortgage-rates
+
 ## Acceptance Criteria
 
 1. No callback functions - use promises instead
 2. Error handling to return 500 error with json formatted message and to log error details 
 3. Unit tests to validate individual components
 4. Integration tests to validate http end-point expected response
+5. Deployment script (including deployment pre-requsites) to automate deployment to AWS: bash, ansible, or terraform
+6. Unit, Integration and Deployment scripts to run on Amazon EC2 Linux
 
 ## Hot to contribute
 
