@@ -83,7 +83,7 @@ GET /Canadian%20Lender
 
 ## Source Data
 
-https://www.ratehub.ca/banks/bank-mortgage-rates
+https://www.ratehub.ca/banks/bank-mortgage-rates loaded and parsed in real-time
 
 ## Acceptance Criteria
 
