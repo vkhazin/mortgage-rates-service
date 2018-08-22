@@ -81,6 +81,13 @@ GET /Canadian%20Lender
 }
 ```
 
+## Acceptance Criteria
+
+1. No callback functions - use promises instead
+2. Error handling to return 500 error with json formatted message and to log error details 
+3. Unit tests to validate individual components
+4. Integration tests to validate http end-point expected response
+
 ## Hot to contribute
 
 1. Fork the repo
