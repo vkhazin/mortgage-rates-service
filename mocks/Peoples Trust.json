@@ -1,0 +1,26 @@
+{
+  "mortgages": [
+    {
+      "provider": "Peoples Trust",
+      "rates": [
+        {
+          "type": "5-years-variable",
+          "rate": 2.5,
+          "comment": "Prime - 1.2"
+        },
+        {
+          "type": "3-years-fixed",
+          "rate": 3.39
+        },
+        {
+          "type": "5-years-fixed",
+          "rate": 3.14
+        },
+        {
+          "type": "10-years-fixed",
+          "rate": 0
+        }
+      ]
+    }   
+  ]
+}
