@@ -1,0 +1,25 @@
+{
+  "mortgages": [
+    {
+      "provider": "MCAP",
+      "rates": [
+        {
+          "type": "5-years-variable",
+          "rate": 0
+        },
+        {
+          "type": "3-years-fixed",
+          "rate": 0
+        },
+        {
+          "type": "5-years-fixed",
+          "rate": 0
+        },
+        {
+          "type": "10-years-fixed",
+          "rate": 0
+        }
+      ]
+    } 
+  ]
+}

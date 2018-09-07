@@ -23,7 +23,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      Runtime: nodejs4.3
+      Runtime: nodejs8.10
       Environment:
         Variables:
           NODE_ENV: production
@@ -31,13 +31,14 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
-        GetEvent:
+        GetMortgageRates:
           Type: Api
           Properties:
             Path: /
             Method: get
-        PostEvent:
+        GetMortgageRate:
           Type: Api
           Properties:
-            Path: /
-            Method: post
+            Path: /{name}
+            Method: get
+        

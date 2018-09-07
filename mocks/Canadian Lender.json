@@ -1,0 +1,26 @@
+{
+  "mortgages": [
+    {
+      "provider": "Canadian Lender",
+      "rates": [
+        {
+          "type": "5-years-variable",
+          "rate": 2.45,
+          "comment": "Prime - 1.25"
+        },
+        {
+          "type": "3-years-fixed",
+          "rate": 3.34
+        },
+        {
+          "type": "5-years-fixed",
+          "rate": 3.18
+        },
+        {
+          "type": "10-years-fixed",
+          "rate": 0
+        }
+      ]
+    }   
+  ]
+}

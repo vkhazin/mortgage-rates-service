@@ -1,0 +1,69 @@
+{
+  "mortgages": [
+    {
+      "provider": "Canadian Lender",
+      "rates": [
+        {
+          "type": "5-years-variable",
+          "rate": 2.45,
+          "comment": "Prime - 1.25"
+        },
+        {
+          "type": "3-years-fixed",
+          "rate": 3.34
+        },
+        {
+          "type": "5-years-fixed",
+          "rate": 3.18
+        },
+        {
+          "type": "10-years-fixed",
+          "rate": 0
+        }
+      ]
+    },
+    {
+      "provider": "MCAP",
+      "rates": [
+        {
+          "type": "5-years-variable",
+          "rate": 0
+        },
+        {
+          "type": "3-years-fixed",
+          "rate": 0
+        },
+        {
+          "type": "5-years-fixed",
+          "rate": 0
+        },
+        {
+          "type": "10-years-fixed",
+          "rate": 0
+        }
+      ]
+    },
+    {
+      "provider": "Peoples Trust",
+      "rates": [
+        {
+          "type": "5-years-variable",
+          "rate": 2.5,
+          "comment": "Prime - 1.2"
+        },
+        {
+          "type": "3-years-fixed",
+          "rate": 3.39
+        },
+        {
+          "type": "5-years-fixed",
+          "rate": 3.14
+        },
+        {
+          "type": "10-years-fixed",
+          "rate": 0
+        }
+      ]
+    }   
+  ]
+}
