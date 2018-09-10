@@ -91,6 +91,16 @@ https://www.ratehub.ca/banks/bank-mortgage-rates loaded and parsed in real-time
 2. Install dependencies from the repository root folder using terminal window: `npm install`
 3. To run unit tests from a terminal window: `npm test`
 
+## Deployment
+
+1. Initialize aws-cli: `aws configure`
+2. Create lambda: `chmod +x ./aws/*.sh && ./aws/create-lambda.sh mortgage-rate-service`
+3. Create api-gateway: 
+```bash
+sudo python3.6 -m pip install boto3 \
+   && python3.6 ./aws/create-api.py mortgage-rate-service
+```
+
 ## How to contribute
 
 1. Fork the repo
