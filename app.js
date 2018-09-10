@@ -44,7 +44,7 @@ let filter = (parsedData, name) => {
 		return parsedData.filter(n => n['provider'] !== '');
 	}
 	else {
-		return parsedData.filter(n => n['provider'] === decodeURIComponent(name));
+		return parsedData.filter(n => n['provider'].toLowerCase() === decodeURIComponent(name).toLowerCase());
 	}
 }
 
@@ -57,12 +57,12 @@ let respond = (filteredData, res) => {
 let handleError = (error, res) => {
 	if (error.request) {
 		res.status(500).send({ error: 'Failed to get the response from server' });
-		console.log(error.request);
+		console.error(error.request);
 	} else {
 		res.status(500).send({ error: 'Unknown error happened' });
-		console.log('Error', error.message);
+		console.error('Error', error.message);
 	}
-	console.log(error.config);
+	console.error(error.config);
 }
 
 app.get('/', function (req, res) {
@@ -111,8 +111,7 @@ app.get('/:name', function (req, res) {
 		});
 });
 
-// app.listen(3000, () => console.log('Example app listening on port 3000!'))
-
+//app.listen(3000, () => console.log('Example app listening on port 3000!'))
 
 // Export your Express configuration so that it can be consumed by the Lambda handler
 module.exports = app
