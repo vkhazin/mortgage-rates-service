@@ -3,7 +3,7 @@ var axios = require('axios');
 var cheerio = require('cheerio');
 var app = express();
 
-let link = 'httpss://www.ratehub.ca/banks/bank-mortgage-rates'
+let link = 'https://www.ratehub.ca/banks/bank-mortgage-rates'
 
 let parseHtml = (response) => {
 	return cheerio.load(response.data);
