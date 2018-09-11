@@ -51,14 +51,22 @@ let filter = (parsedData, name) => {
 }
 
 let respond = (filteredData, res) => {
-	cache.set('/', filteredData, function(err, success) {
-		if (!err && success) {
-			objectToSave = {
-				'mortgages': filteredData
+	if(filteredData.length > 0) {
+		cache.set('/', filteredData, function(err, success) {
+			if (!err && success) {
+				objectToSave = {
+					'mortgages': filteredData
+				}
+				return res.status(200).send(objectToSave);
 			}
-			return res.status(200).send(objectToSave);
+		});
+	}
+	else {
+		objectToSave = {
+			'mortgages': filteredData
 		}
-	});
+		return res.status(200).send(objectToSave);
+	}
 }
 
 let handleError = (error, res) => {
