@@ -50,16 +50,15 @@ let filter = (parsedData, name) => {
 	}
 }
 
-let respond = (filteredData, res, key) => {
-	objectToSave = {
-		'mortgages': filteredData
-	}
-	cache.set(key, objectToSave, function(err, success) {
+let respond = (filteredData, res) => {
+	cache.set('/', filteredData, function(err, success) {
 		if (!err && success) {
+			objectToSave = {
+				'mortgages': filteredData
+			}
 			return res.status(200).send(objectToSave);
 		}
 	});
-
 }
 
 let handleError = (error, res) => {
@@ -101,7 +100,7 @@ app.get('/', function (req, res) {
 			}
 			else {
 				console.log('[INFO] JSON retrieved from cache');
-				return res.status(200).send(value);
+				return respond(filter(value, key), res);
 			}
 		}
 	});
@@ -110,7 +109,7 @@ app.get('/', function (req, res) {
 
 app.get('/:name', function (req, res) {
 	let key = req.params.name;
-	cache.get(key, (err, value) => {
+	cache.get('/', (err, value) => {
 		if (!err) {
 			if (value == undefined) {
 				axios.get(link)
@@ -136,7 +135,7 @@ app.get('/:name', function (req, res) {
 			}
 			else {
 				console.log('[INFO] JSON retrieved from cache');
-				return res.status(200).send(value);
+				return respond(filter(value, key), res);
 			}
 		}
 	});
