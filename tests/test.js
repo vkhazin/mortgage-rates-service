@@ -73,5 +73,38 @@ describe('Tests app', () => {
       }
       done(err);
     });
-  }).timeout(5000);;
+  }).timeout(5000);
+
+  it('verifies cache mechanism on GET /Canadian%20Lender', function (done) {
+    request.get('/Canadian%20Lender').expect(200).end(function (err, result) {
+      test.value(result).hasHeader('content-type', 'application/json; charset=utf-8');
+      let output = result.body;
+      should(output).have.property('mortgages');
+      should(output['mortgages']).be.Array;
+      should(output['mortgages']).have.a.lengthOf(1);
+
+      for (let mortgage of output['mortgages']) {
+        should(mortgage).have.property('provider').and.should.not.be.empty;
+        should(mortgage).have.property('rates');
+        should(mortgage['rates']).be.Array;
+        should(mortgage['rates']).have.a.lengthOf(4);
+
+        for (let rate of mortgage['rates']) {
+
+          should(rate).have.property('type');
+          should(rate['type']).be.a.String;
+          should(['3-years-fixed',
+            '5-years-variable',
+            '5-years-fixed',
+            '10-years-fixed'
+          ]).containEql(rate['type']);
+
+          should(rate).have.property('rate');
+          should(rate['rate']).be.a.Number;
+        };
+      }
+      done(err);
+    });
+  }).timeout(1000);
+
 });

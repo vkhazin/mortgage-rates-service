@@ -1,7 +1,9 @@
-var express = require('express');
-var axios = require('axios');
-var cheerio = require('cheerio');
-var app = express();
+const express = require('express');
+const axios = require('axios');
+const cheerio = require('cheerio');
+const NodeCache = require('node-cache');
+const app = express();
+const cache = new NodeCache({ stdTTL: 60 * 60, checkperiod: 120 });
 
 let link = 'https://www.ratehub.ca/banks/bank-mortgage-rates'
 
@@ -22,7 +24,7 @@ let scrape = (html) => {
 				},
 				{
 					'type': '3-years-fixed',
-					'rate': parseFloat(html(element).find('td:nth-child(3)').text().trim())  || 0
+					'rate': parseFloat(html(element).find('td:nth-child(3)').text().trim()) || 0
 				},
 				{
 					'type': '5-years-fixed',
@@ -30,7 +32,7 @@ let scrape = (html) => {
 				},
 				{
 					'type': '10-years-fixed',
-					'rate': parseFloat(html(element).find('td:nth-child(5)').text().trim())  || 0
+					'rate': parseFloat(html(element).find('td:nth-child(5)').text().trim()) || 0
 				}
 			]
 		}
@@ -48,10 +50,16 @@ let filter = (parsedData, name) => {
 	}
 }
 
-let respond = (filteredData, res) => {
-	return res.status(200).send({
+let respond = (filteredData, res, key) => {
+	objectToSave = {
 		'mortgages': filteredData
+	}
+	cache.set(key, objectToSave, function(err, success) {
+		if (!err && success) {
+			return res.status(200).send(objectToSave);
+		}
 	});
+
 }
 
 let handleError = (error, res) => {
@@ -66,52 +74,75 @@ let handleError = (error, res) => {
 }
 
 app.get('/', function (req, res) {
-	axios.get(link)
-		.then((response) => {
-			console.log('[INFO] Parsing');
-			return parseHtml(response, res);
-		})
-		.then((html) => {
-			console.log('[INFO] Scraping');
-			return scrape(html);
-		})
-		.then((data) => {
-			console.log('[INFO] Filtering');
-			return filter(data);
-		})
-		.then((filteredData) => {
-			console.log('[INFO] Responding');
-			return respond(filteredData, res);
-		})
-		.catch((error) => {
-			handleError(error, res);
-		});
+	let key = '/';
+	cache.get(key, (err, value) => {
+		if (!err) {
+			if (value == undefined) {
+				axios.get(link)
+					.then((response) => {
+						console.log('[INFO] Parsing');
+						return parseHtml(response, res);
+					})
+					.then((html) => {
+						console.log('[INFO] Scraping');
+						return scrape(html);
+					})
+					.then((data) => {
+						console.log('[INFO] Filtering');
+						return filter(data);
+					})
+					.then((filteredData) => {
+						console.log('[INFO] Responding');
+						return respond(filteredData, res, key);
+					})
+					.catch((error) => {
+						handleError(error, res);
+					});
+			}
+			else {
+				console.log('[INFO] JSON retrieved from cache');
+				return res.status(200).send(value);
+			}
+		}
+	});
+
 });
 
 app.get('/:name', function (req, res) {
-	axios.get(link)
-		.then((response) => {
-			console.log('[INFO] Parsing');
-			return parseHtml(response, res);
-		})
-		.then((html) => {
-			console.log('[INFO] Scraping');
-			return scrape(html);
-		})
-		.then((data) => {
-			console.log('[INFO] Filtering');
-			return filter(data, req.params.name);
-		})
-		.then((filteredData) => {
-			console.log('[INFO] Responding');
-			return respond(filteredData, res);
-		})
-		.catch((error) => {
-			handleError(error, res);
-		});
+	let key = req.params.name;
+	cache.get(key, (err, value) => {
+		if (!err) {
+			if (value == undefined) {
+				axios.get(link)
+					.then((response) => {
+						console.log('[INFO] Parsing');
+						return parseHtml(response, res);
+					})
+					.then((html) => {
+						console.log('[INFO] Scraping');
+						return scrape(html);
+					})
+					.then((data) => {
+						console.log('[INFO] Filtering');
+						return filter(data, key);
+					})
+					.then((filteredData) => {
+						console.log('[INFO] Responding');
+						return respond(filteredData, res, key);
+					})
+					.catch((error) => {
+						handleError(error, res);
+					});
+			}
+			else {
+				console.log('[INFO] JSON retrieved from cache');
+				return res.status(200).send(value);
+			}
+		}
+	});
 });
 
-//app.listen(3000, () => console.log('Example app listening on port 3000!'))
+app.listen(3000, () => console.log('Example app listening on port 3000!'))
 
 // Export your Express configuration so that it can be consumed by the Lambda handler
 module.exports = app
