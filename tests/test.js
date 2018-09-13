@@ -12,6 +12,7 @@ Object.defineProperty(global, 'should', {
 const request = supertest(app);
 
 describe('Tests app', () => {
+  
   it('verifies GET /', (done) => {
     request.get('/').expect(200).end((err, result) => {
       test.value(result).hasHeader('content-type', 'application/json; charset=utf-8');
@@ -103,6 +104,17 @@ describe('Tests app', () => {
           should(rate['rate']).be.a.Number;
         };
       }
+      done(err);
+    });
+  }).timeout(1000);
+  
+  it('verifies cache mechanism on GET /', function (done) {
+    request.get('/').expect(200).end(function (err, result) {
+      test.value(result).hasHeader('content-type', 'application/json; charset=utf-8');
+      let output = result.body;
+      should(output).have.property('mortgages');
+      should(output['mortgages']).be.Array;
+      should(output['mortgages']).be.aboveOrEqual(2);
       done(err);
     });
   }).timeout(1000);
