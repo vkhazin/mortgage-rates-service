@@ -108,7 +108,7 @@ app.get('/', function (req, res) {
 			}
 			else {
 				console.log('[INFO] JSON retrieved from cache');
-				return respond(filter(value, key), res);
+				return respond(value, res);
 			}
 		}
 	});
