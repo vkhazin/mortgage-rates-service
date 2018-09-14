@@ -17,6 +17,6 @@
         "supertest": "3.0.0"
     },
     "scripts": {
-        "test": "mocha --recursive tests"
+        "test": "npm install && ./node_modules/mocha/bin/mocha --recursive tests"
     }
 }
