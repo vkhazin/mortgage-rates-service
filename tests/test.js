@@ -114,7 +114,7 @@ describe('Tests app', () => {
       let output = result.body;
       should(output).have.property('mortgages');
       should(output['mortgages']).be.Array;
-      should(output['mortgages'].lenght).be.aboveOrEqual(2);
+      should(output['mortgages'].length).be.aboveOrEqual(2);
       
       for (let mortgage of output['mortgages']) {
         should(mortgage).have.property('provider').and.should.not.be.empty;

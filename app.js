@@ -51,7 +51,7 @@ let filter = (parsedData, name) => {
 }
 
 let respond = (filteredData, res) => {
-	if(filteredData.length > 0) {
+	if(filteredData.length > 1) {
 		cache.set('/', filteredData, function(err, success) {
 			if (!err && success) {
 				objectToSave = {
