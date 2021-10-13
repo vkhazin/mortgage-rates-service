@@ -1,14 +1,13 @@
 {
-    "name": "express-HelloWorld",
-    "description": "Hello World ExpressJS WebService",
-    "version": "0.0.1",
+    "name": "mortgage-rates-service",
+    "description": "API for Big 5 Banks mortgage rates in Canada",
+    "version": "0.0.2",
     "private": true,
     "dependencies": {
-        "aws-serverless-express": "3.1.3",
-        "axios": "^0.18.0",
-        "cheerio": "^1.0.0-rc.2",
-        "express": "4.16.2",
-        "node-cache": "^4.2.0"
+        "axios": "^0.23.0",
+        "cheerio": "^1.0.0-rc.10",
+        "express": "4.17.1",
+        "node-cache": "^4.2.1"
     },
     "devDependencies": {
         "mocha": "5.0.0",
@@ -17,6 +16,7 @@
         "supertest": "3.0.0"
     },
     "scripts": {
-        "test": "npm install && ./node_modules/mocha/bin/mocha --recursive tests"
+        "dev": "node index.js",
+        "test": "npm install && mocha/bin/mocha --recursive tests"
     }
 }

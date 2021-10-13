@@ -13,14 +13,14 @@ let parseHtml = (response) => {
 
 let scrape = (html) => {
 	let parsedData = []
-	html('.rh-table > tbody > tr').each(function (i, element) {
+	html('.table-container > table > tbody > tr').each(function (i, element) {
 		let row = {
-			'provider': html(element).find('span .provider-name').text().trim(),
+			'provider': html(element).find('.provider-title').text().trim(),
 			'rates': [
 				{
 					'type': '5-years-variable',
-					'rate': parseFloat(html(element).find('td:nth-child(2) > a > span > span').text().trim()) || 0,
-					'comment': html(element).find('td:nth-child(2) > a > span > div').text().trim()
+					'rate': parseFloat(html(element).find('td:nth-child(2) .rateCell > .rate > .value').text().trim()) || 0,
+					'comment': html(element).find('.primeDifference').text().trim()
 				},
 				{
 					'type': '3-years-fixed',
@@ -29,11 +29,11 @@ let scrape = (html) => {
 				{
 					'type': '5-years-fixed',
 					'rate': parseFloat(html(element).find('td:nth-child(4)').text().trim()) || 0
-				},
-				{
+				}
+				/*{
 					'type': '10-years-fixed',
 					'rate': parseFloat(html(element).find('td:nth-child(5)').text().trim()) || 0
-				}
+				}*/
 			]
 		}
 		parsedData.push(row);
@@ -88,14 +88,17 @@ app.get('/', function (req, res) {
 				axios.get(link)
 					.then((response) => {
 						console.log('[INFO] Parsing');
+						//console.log(response);
 						return parseHtml(response, res);
 					})
 					.then((html) => {
 						console.log('[INFO] Scraping');
+						//console.log(html);
 						return scrape(html);
 					})
 					.then((data) => {
 						console.log('[INFO] Filtering');
+						//console.log(data)
 						return filter(data);
 					})
 					.then((filteredData) => {
