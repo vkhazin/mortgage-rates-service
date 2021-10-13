@@ -88,14 +88,17 @@ app.get('/', function (req, res) {
 				axios.get(link)
 					.then((response) => {
 						console.log('[INFO] Parsing');
+						//console.log(response);
 						return parseHtml(response, res);
 					})
 					.then((html) => {
 						console.log('[INFO] Scraping');
+						//console.log(html);
 						return scrape(html);
 					})
 					.then((data) => {
 						console.log('[INFO] Filtering');
+						//console.log(data)
 						return filter(data);
 					})
 					.then((filteredData) => {
